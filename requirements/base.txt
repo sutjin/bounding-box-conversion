@@ -1,0 +1,1 @@
+dataclasses-serialization==1.3.1
