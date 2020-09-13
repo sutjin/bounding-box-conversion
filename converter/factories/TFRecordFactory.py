@@ -16,10 +16,11 @@ import pandas as pd
 import tensorflow as tf
 
 from PIL import Image
-from object_detection.utils import dataset_util
+
 from collections import namedtuple, OrderedDict
 
-from converter.factories.helper import get_label_id_from_name
+from converter.utils import dataset_util
+from converter.utils.helper import get_label_id_from_name
 
 class Factory:
     @staticmethod

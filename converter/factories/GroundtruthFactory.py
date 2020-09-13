@@ -1,5 +1,5 @@
 import json
-from converter.factories.helper import get_label_id_from_name
+from converter.utils.helper import get_label_id_from_name
 from converter.model.PascalVOC import Annotation as PascalVOC
 from converter.model.AWS import Object, Dimension, Annotation, \
     BoundingBox, BoundingBoxMetadata, GroundTruth
