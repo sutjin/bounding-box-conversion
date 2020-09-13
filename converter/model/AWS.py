@@ -35,8 +35,8 @@ class BoundingBoxMetadata:
     class_map: dict
     type: str = 'groundtruth/object-detection'
     human_annotated: str = 'yes'
-    creation_date: str = datetime.datetime.now()
-    job_name: str = ''
+    creation_date: str = str(datetime.datetime.now())
+    job_name: str = 'manual-conversion'
 
 
 @dataclass

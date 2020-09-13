@@ -1,7 +1,9 @@
+import json
 from converter.factories.helper import get_label_id_from_name
 from converter.model.PascalVOC import Annotation as PascalVOC
 from converter.model.AWS import Object, Dimension, Annotation, \
     BoundingBox, BoundingBoxMetadata, GroundTruth
+from dataclasses_serialization.json import JSONSerializer
 
 
 class Factory:
@@ -27,15 +29,13 @@ class Factory:
                 )
             )
 
-            # TODO: create converter,
-            # figure out how to calculate value from pascal
             annotation_list.append(
                 Annotation(
                     class_id=get_label_id_from_name(item.name),
-                    top=1,
-                    left=1,
-                    width=1,
-                    height=1
+                    top=item.bnbbox.ymin,
+                    left=item.bnbbox.xmin,
+                    width=item.bnbbox.xmax,
+                    height=item.bnbbox.ymax
                 )
             )
 
@@ -69,7 +69,32 @@ class Factory:
 
         return result
 
+    # TODO: convert into file and output
+    def output_file(self, groundtruth=[], output_path='output.manifest'):
+
+        output = open(output_path, "w")
+
+        for gt in groundtruth:
+            output.write(
+                self._convert_to_string(gt)
+            )
+            output.write("\n")
+        
+        output.close()
+
 
     @staticmethod
-    def output_file():
-        print('this is where we print the file')
+    def _convert_to_string(input):
+        f_output = json.dumps(
+                    JSONSerializer.serialize(input)
+                )
+        # TODO: need to find a better way to do this
+        f_output = f_output.replace('source_ref' , 'source-ref') \
+            .replace('bounding_box' , 'bounding-box') \
+            .replace('bounding_box_metadata' , 'bounding-box-metadata') \
+            .replace('bounding-box_metadata' , 'bounding-box-metadata') \
+            .replace('class_map' , 'class-map') \
+            .replace('human_annotated' , 'human-annotated') \
+            .replace('creation_date' , 'creation-date') \
+            .replace('job_name' , 'job-name')
+        return f_output
