@@ -31,7 +31,7 @@ class Factory:
 
         annotation = Annotation(
             filename=root.find('filename').text,
-            path="",  # TODO: get S3 path
+            path="",
             size=size,
             objects=[])
 

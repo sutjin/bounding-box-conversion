@@ -25,16 +25,16 @@ class Annotation:
 
 @dataclass
 class BoundingBox:
-    image_size: list[Dimension]
-    annotations: list[Annotation]
+    image_size: [Dimension]
+    annotations: [Annotation]
 
 
 @dataclass
 class BoundingBoxMetadata:
     objects: [Object]
     class_map: dict
-    type: str
-    human_annotated: str
+    type: str = 'groundtruth/object-detection'
+    human_annotated: str = 'yes'
     creation_date: str = datetime.datetime.now()
     job_name: str = ''
 
