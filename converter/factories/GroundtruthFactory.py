@@ -10,9 +10,11 @@ class Factory:
     s3_path = None
 
     def __init__(self, s3_path):
-        self.s3_path = s3_path  # TODO: make sure its a valid s3 path
+        self.s3_path = self._validate_s3_path(s3_path)
 
     def _annotation_to_groundtruth(self, source):
+        class_map = {}
+
         dimension = Dimension(
             width=source.size.width,
             height=source.size.height,
@@ -39,6 +41,8 @@ class Factory:
                 )
             )
 
+            class_map[get_label_id_from_name(item.name)] = item.name
+
         boundingBox = BoundingBox(
             image_size=[dimension],
             annotations=annotation_list
@@ -46,7 +50,7 @@ class Factory:
 
         boundingBoxMetadata = BoundingBoxMetadata(
             objects=object_list,
-            class_map={}
+            class_map=class_map
         )
 
         return GroundTruth(
@@ -69,7 +73,6 @@ class Factory:
 
         return result
 
-    # TODO: convert into file and output
     def output_file(self, groundtruth=[], output_path='output.manifest'):
 
         output = open(output_path, "w")
@@ -98,3 +101,12 @@ class Factory:
             .replace('creation_date' , 'creation-date') \
             .replace('job_name' , 'job-name')
         return f_output
+
+    def _validate_s3_path(self, input_path):
+        if not input_path.startswith("s3://"):
+            raise Exception("Path needs to start with s3://")
+
+        if not input_path.endswith("/"):
+            input_path += "/"
+
+        return input_path

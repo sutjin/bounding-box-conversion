@@ -1,6 +1,30 @@
 [
   {
     "id": 0,
-    "type": "name"
+    "type": "jordan"
+  },
+  {
+    "id": 1,
+    "type": "airforce"
+  },
+  {
+    "id": 2,
+    "type": "all star"
+  },
+  {
+    "id": 3,
+    "type": "van"
+  },
+  {
+    "id": 4,
+    "type": "cortez"
+  },
+  {
+    "id": 5,
+    "type": "yeezy"
+  },
+  {
+    "id": 6,
+    "type": "original"
   }
 ]

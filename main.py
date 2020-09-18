@@ -17,7 +17,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "mode", help="options: [pascal_to_groundtruth, pascal_to_tfrecords]"
     )
-    parser.add_argument("--s3_path", help="S3 path needed for Groundtruth")
+    parser.add_argument("--s3_path", help="S3 path needed for Groundtruth, should be where you images are stored")
     parser.add_argument("--pascal_label_path", help="Directory to pascal label peth")
     parser.add_argument("--output", help="Output path")
 
@@ -25,7 +25,7 @@ if __name__ == "__main__":
     Converter().setLabelmap()
 
     if args.mode == "pascal_to_groundtruth":
-        if args.s3_path or args.pascal_label_path:
+        if not args.s3_path or not args.pascal_label_path:
             raise Exception("s3_path and pascal_label_path required for execution") 
         
         annotationFactory = A_Factory()
