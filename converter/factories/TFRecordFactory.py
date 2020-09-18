@@ -31,7 +31,7 @@ class Factory:
 
     @staticmethod
     def create_tf_example(group, path):
-        with tf.gfile.GFile(os.path.join(path, '{}'.format(group.filename)), 'rb') as fid:
+        with tf.io.gfile.GFile(os.path.join(path, '{}'.format(group.filename)), 'rb') as fid:
             encoded_jpg = fid.read()
         encoded_jpg_io = io.BytesIO(encoded_jpg)
         image = Image.open(encoded_jpg_io)
@@ -71,7 +71,7 @@ class Factory:
         return tf_example
 
     def output_file(self, image_dir=None, csv_input=None, output='output.record'):
-        writer = tf.python_io.TFRecordWriter(output)
+        writer = tf.io.TFRecordWriter(output)
         path = os.path.join(image_dir)
         examples = pd.read_csv(csv_input)
         grouped = self.split(examples, 'filename')
